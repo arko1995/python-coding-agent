@@ -7,10 +7,13 @@ authors = [
     { name = "arko1995", email = "shahriarsohelarko@gmail.com" }
 ]
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "google-genai==1.12.1",
+    "python-dotenv==1.1.0",
+]
 
 [project.scripts]
-python-coding-agent = "python_coding_agent:main"
+python-coding-agent = "python_coding_agent.main:main"
 
 [build-system]
 requires = ["uv_build>=0.12.7,<0.13.0"]
