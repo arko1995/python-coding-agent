@@ -14,6 +14,7 @@ dependencies = [
 
 [project.scripts]
 python-coding-agent = "python_coding_agent.main:main"
+dev = "python_coding_agent.main:main"
 
 [build-system]
 requires = ["uv_build>=0.12.7,<0.13.0"]
