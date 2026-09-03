@@ -4,13 +4,13 @@ from pkg.render import format_json_output
 
 
 def main() -> None:
-    if len(sys.argv) < 1:
-        calculator = Calculator()
+    if len(sys.argv) < 2:
         print("Calculator App")
         print('Usage: python main.py "<expression>"')
         print('Example: python main.py "3 + 5"')
         return
 
+    calculator = Calculator()
     expression = " ".join(sys.argv[1:])
 
     try:
