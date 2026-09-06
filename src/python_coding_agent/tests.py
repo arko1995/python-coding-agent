@@ -1,14 +1,13 @@
 # from .functions.get_files_info import get_files_info
 # from .functions.get_file_content import get_file_content
-from .functions.write_file import write_file
+# from .functions.write_file import write_file
+from .functions.run_python_file import run_python_file
 
 
 def main():
     working_dir = "python_coding_agent/calculator"
 
-    print(write_file(working_dir, "lorem.txt", "wait this isn't lorem text"))
-    print(write_file(working_dir, "pkg/morelorem.txt", "This is more lorem ipsum text"))
-    print(write_file(working_dir, "/tmp/temp.txt", "This should not be allowed"))
+    print(run_python_file(working_dir, "main.py", ["3 + 5"]))
 
 
 main()
