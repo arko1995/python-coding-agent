@@ -1,4 +1,5 @@
 import os
+from google.genai import types
 
 
 def write_file(working_directory, file_path, content):
@@ -27,3 +28,19 @@ def write_file(working_directory, file_path, content):
         return f"successfully wrote to {file_path}, {len(content)} characters written"
     except Exception as e:
         return f"Could not write in file: {file_path}, Error:{e}"
+
+
+schema_get_files_info = types.FunctionDeclaration(
+    name="get_files_info",
+    description="Lists files in the specified directory along with their sizes, constrained to their working directory",
+    parameters=types.Schema(
+        type=types.Type.OBJECT,
+        properties={
+            "directory": types.Schema(
+                type=types.Type.STRING,
+                description="The directory to list files from, relative to the working directory, if not provided, lists files in the working directory itself",
+            ),
+        },
+        required=["directory"],
+    ),
+)
