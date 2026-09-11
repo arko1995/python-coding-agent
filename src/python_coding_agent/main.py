@@ -4,6 +4,9 @@ from google import genai
 import sys
 from google.genai import types
 from .functions.get_files_info import schema_get_files_info
+from .functions.get_file_content import schema_get_files_content
+from .functions.run_python_file import schema_run_python_file
+from .functions.write_file import schema_write_file
 
 load_dotenv()
 
@@ -20,6 +23,9 @@ You have access to tools that you may use when necessary.
 
 Available operations:
 - List files and directories
+- Read the content of a file
+- Write to a file (create or update)
+- Run a python file with optional arguments
 
 Only call a function when it is necessary to answer the user's request.
 If you can answer the user's question without inspecting files, respond normally.
@@ -41,7 +47,14 @@ The working directory is automatically injected for security reasons.
 
     message = [types.Content(role="user", parts=[types.Part(text=prompt)])]
 
-    available_functions = types.Tool(function_declarations=[schema_get_files_info])
+    available_functions = types.Tool(
+        function_declarations=[
+            schema_get_files_info,
+            schema_get_files_content,
+            schema_write_file,
+            schema_run_python_file,
+        ]
+    )
 
     config = types.GenerateContentConfig(
         tools=[available_functions], system_instruction=system_prompt
@@ -65,6 +78,5 @@ The working directory is automatically injected for security reasons.
             print(
                 f"Calling functions: {function_call_part.name}({function_call_part.args})"
             )
-
     else:
         print("Response: ", response.text)

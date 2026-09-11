@@ -41,17 +41,22 @@ def run_python_file(working_directory: str, file_path: str, args=[]):
         return f"Error running python fille, Error:{e}"
 
 
-schema_get_files_info = types.FunctionDeclaration(
-    name="get_files_info",
-    description="Lists files in the specified directory along with their sizes, constrained to their working directory",
+schema_run_python_file = types.FunctionDeclaration(
+    name="run_python_file",
+    description="Runs a python fle using python3 interpreter, Accepts additional CLI args as an optional array",
     parameters=types.Schema(
         type=types.Type.OBJECT,
         properties={
-            "directory": types.Schema(
+            "file_path": types.Schema(
                 type=types.Type.STRING,
-                description="The directory to list files from, relative to the working directory, if not provided, lists files in the working directory itself",
+                description="The path to the file that is going the be executed using python3 interpreter, relative to the working directory",
+            ),
+            "args": types.Schema(
+                type=types.Type.ARRAY,
+                items=types.Schema(type=types.Type.STRING),
+                description="This is the additional optional array of strings that you can pass on to the python file in the CLI args if the python file requires it to generate the desired output",
             ),
         },
-        required=["directory"],
+        required=["file_path"],
     ),
 )

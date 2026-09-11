@@ -30,17 +30,21 @@ def write_file(working_directory, file_path, content):
         return f"Could not write in file: {file_path}, Error:{e}"
 
 
-schema_get_files_info = types.FunctionDeclaration(
-    name="get_files_info",
-    description="Lists files in the specified directory along with their sizes, constrained to their working directory",
+schema_write_file = types.FunctionDeclaration(
+    name="write_file",
+    description="Writes the contents passed in the CLI into the file designated at the file path, If there is existing content in the file it will replace the content, if the directory does not exist, it will create the directory. If the file does not exist, it will create the file and then write the content into it,constrained to their working directory",
     parameters=types.Schema(
         type=types.Type.OBJECT,
         properties={
-            "directory": types.Schema(
+            "file_path": types.Schema(
                 type=types.Type.STRING,
-                description="The directory to list files from, relative to the working directory, if not provided, lists files in the working directory itself",
+                description="The file that gets written into, relative to the working directory.",
+            ),
+            "content": types.Schema(
+                type=types.Type.STRING,
+                description="The content that gets written into the file as a string",
             ),
         },
-        required=["directory"],
+        required=["file_path"],
     ),
 )

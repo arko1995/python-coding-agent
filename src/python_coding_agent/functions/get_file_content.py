@@ -36,7 +36,7 @@ schema_get_files_content = types.FunctionDeclaration(
         properties={
             "file_path": types.Schema(
                 type=types.Type.STRING,
-                description="The path to the file from the working directory",
+                description="The path to the file from the working directory, constrained to their working directory",
             ),
         },
         required=["file_path"],
