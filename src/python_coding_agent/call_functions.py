@@ -4,7 +4,7 @@ from .functions.get_file_content import get_file_content
 from .functions.get_files_info import get_files_info
 from google.genai import types
 
-working_directory = "calculator"
+working_directory = "src/python_coding_agent"
 
 
 def call_functions(function_call_part, verbose=False):

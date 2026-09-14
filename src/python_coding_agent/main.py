@@ -7,6 +7,7 @@ from .functions.get_files_info import schema_get_files_info
 from .functions.get_file_content import schema_get_files_content
 from .functions.run_python_file import schema_run_python_file
 from .functions.write_file import schema_write_file
+from .call_functions import call_functions
 
 load_dotenv()
 
@@ -75,8 +76,7 @@ The working directory is automatically injected for security reasons.
     if response.function_calls:
 
         for function_call_part in response.function_calls:
-            print(
-                f"Calling functions: {function_call_part.name}({function_call_part.args})"
-            )
+            result = call_functions(function_call_part, verbose_flag)
+            print(result)
     else:
         print("Response: ", response.text)
