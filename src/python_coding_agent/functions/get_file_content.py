@@ -28,8 +28,8 @@ def get_file_content(working_directory, file_path):
         return f"Exception reading file: {e}"
 
 
-schema_get_files_content = types.FunctionDeclaration(
-    name="get_files_content",
+schema_get_file_content = types.FunctionDeclaration(
+    name="get_file_content",
     description="Lists the contents of the specified files as a string, constrained to their working directory",
     parameters=types.Schema(
         type=types.Type.OBJECT,
