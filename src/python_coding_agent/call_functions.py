@@ -28,7 +28,7 @@ def call_functions(function_call_part, verbose=False):
 
     if result == "":
         return types.Content(
-            role="tool",
+            role="user",
             parts=[
                 types.Part.from_function_response(
                     name=function_call_part.name,
@@ -38,7 +38,7 @@ def call_functions(function_call_part, verbose=False):
         )
 
     return types.Content(
-        role="tool",
+        role="user",
         parts=[
             types.Part.from_function_response(
                 name=function_call_part.name, response={"result": result}

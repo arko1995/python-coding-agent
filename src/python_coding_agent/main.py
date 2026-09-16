@@ -3,11 +3,13 @@ from dotenv import load_dotenv
 from google import genai
 import sys
 from google.genai import types
+from google.genai.errors import ClientError
 from .functions.get_files_info import schema_get_files_info
 from .functions.get_file_content import schema_get_file_content
 from .functions.run_python_file import schema_run_python_file
 from .functions.write_file import schema_write_file
 from .call_functions import call_functions
+import time
 
 load_dotenv()
 
@@ -61,13 +63,24 @@ The working directory is automatically injected for security reasons.
         tools=[available_functions], system_instruction=system_prompt
     )
 
-    response = client.models.generate_content(
-        model="gemini-3.6-flash", contents=message, config=config
-    )
-
     max_iters = 20
 
     for i in range(max_iters):
+
+        while True:
+            try:
+                response = client.models.generate_content(
+                    model="gemini-3.6-flash", contents=message, config=config
+                )
+                break
+
+            except ClientError as e:
+                if e.code == 429:
+                    print("Rate limit reached, Trying....")
+                    time.sleep(7)
+                    continue
+
+                raise
 
         if response is None or response.usage_metadata is None:
             return
@@ -93,3 +106,4 @@ The working directory is automatically injected for security reasons.
                 message.append(result)
         else:
             print("Response: ", response.text)
+            return
