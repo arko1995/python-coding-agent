@@ -65,18 +65,31 @@ The working directory is automatically injected for security reasons.
         model="gemini-3.6-flash", contents=message, config=config
     )
 
-    if response is None or response.usage_metadata is None:
-        return
+    max_iters = 20
 
-    if verbose_flag:
-        print("User Prompt: ", prompt)
-        print("Response Token: ", response.usage_metadata.prompt_token_count)
-        print("Candidate Token: ", response.usage_metadata.candidates_token_count)
+    for i in range(max_iters):
 
-    if response.function_calls:
+        if response is None or response.usage_metadata is None:
+            return
 
-        for function_call_part in response.function_calls:
-            result = call_functions(function_call_part, verbose_flag)
-            print(result)
-    else:
-        print("Response: ", response.text)
+        if verbose_flag:
+            print("User Prompt: ", prompt)
+            print("Response Token: ", response.usage_metadata.prompt_token_count)
+            print("Candidate Token: ", response.usage_metadata.candidates_token_count)
+
+        if response.candidates:
+
+            for candidate in response.candidates:
+
+                if candidate is None or candidate.content is None:
+                    continue
+
+                message.append(candidate.content)
+
+        if response.function_calls:
+
+            for function_call_part in response.function_calls:
+                result = call_functions(function_call_part, verbose_flag)
+                message.append(result)
+        else:
+            print("Response: ", response.text)

@@ -14,13 +14,16 @@ def get_files_info(working_directory, directory="."):
     final_response = ""
 
     contents = os.listdir(abs_directory)
+    try:
 
-    for content in contents:
-        content_path = os.path.join(abs_directory, content)
-        is_dir = os.path.isdir(content_path)
-        size = os.path.getsize(content_path)
+        for content in contents:
+            content_path = os.path.join(abs_directory, content)
+            is_dir = os.path.isdir(content_path)
+            size = os.path.getsize(content_path)
 
-        final_response += f"-{content}: file_size={size} bytes, is_dir={is_dir}\n"
+            final_response += f"-{content}: file_size={size} bytes, is_dir={is_dir}\n"
+    except Exception as e:
+        final_response += f"could not get files info from the directory. Error: {e}"
 
     return final_response
 
