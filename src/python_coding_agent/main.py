@@ -77,7 +77,7 @@ The working directory is automatically injected for security reasons.
             except ClientError as e:
                 if e.code == 429:
                     print("Rate limit reached, Trying....")
-                    time.sleep(7)
+                    time.sleep(60)
                     continue
 
                 raise
